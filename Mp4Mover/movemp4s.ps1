@@ -1,1 +1,1 @@
-Get-Childitem -Path "G:\Firefox Downloads\" -Include "*Imgur.mp4" -File -Recurse -Name | ForEach-object {Move-Item -Path "./$_" -Destination "G:\Firefox Downloads\wallpaperworthy\3D"}
+ls -Recurse -Path ".\*Imgur.mp4" | Move-Item -Destination ".\Dest"
