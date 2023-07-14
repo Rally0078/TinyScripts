@@ -1,0 +1,1 @@
+Enable-PnpDevice -InstanceId "PCI\VEN_10DE&DEV_25A2&SUBSYS_132E1462&REV_A1\4&B48410E&0&0008" -confirm:$false
