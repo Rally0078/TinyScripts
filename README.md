@@ -6,3 +6,5 @@
 <p>Moves PDF files to a folder named <i>pdfs</i> in the working directory</p>
 <h3>TwitterImgRenamer</h3>
 <p>Gives jpeg extensiont to Twitter images which save with no extension</p>
+<h3>CBZ maker</h3>
+<p>Makes a CBZ file from the numbered images within the folder. Supports batch conversion into CBZ through file having list of folders</p>
