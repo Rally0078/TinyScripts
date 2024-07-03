@@ -8,3 +8,5 @@
 <p>Gives jpeg extensiont to Twitter images which save with no extension</p>
 <h3>CBZ maker</h3>
 <p>Makes a CBZ file from the numbered images within the folder. Supports batch conversion into CBZ through file having list of folders</p>
+<h3>MinecraftBackup</h3>
+<p>Creates backup archive of a Minecraft server(any folder really), names them by date, and keeps the latest 3 backups. Requires 7zip</p>
