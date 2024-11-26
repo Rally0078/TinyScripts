@@ -1,8 +1,8 @@
 import os
-import sys
 from pathlib import Path
 import csv
 import argparse
+import textwrap
 
 version_byte_dict = {
         1: b'\x01',
@@ -57,7 +57,7 @@ def view_versions(directory: str, **kwargs):
                 with open(os.path.join(path, f), 'rb') as filehandle:
                     filehandle.seek(4)
                     archive_version_byte = filehandle.read(1)
-                    print(f"{f : <50} {archive_version_byte}")
+                    print(f"{str(count+1): <5} {f : <50} {archive_version_byte}")
                     archive_name.append(f)
                     archive_version.append(int.from_bytes(archive_version_byte))
                     count += 1
@@ -93,14 +93,14 @@ def change_version(directory: str, version: int, **kwargs):
                     filehandle.seek(4)
                     archive_version_byte = filehandle.read(1)
                     if archive_version_byte == version_byte_dict[version]:
-                        print(f"No change needed for {f}")
+                        print(f"{str(count+1): <5} {f: <50} - No change needed")
                     else:
                         if testing:
-                            print(f"File {f} needs change in header")
+                            print(f"{str(count+1): <5} {f: <50} - Header needs to be changed")
                         else:
                             filehandle.seek(4)
                             filehandle.write(version_byte_dict[version])
-                            print(f"Changed {f} header")
+                            print(f"{str(count+1): <5} {f: <50} - Header changed")
                         count_edited += 1
                     count += 1
         break
@@ -134,14 +134,14 @@ def restore_backup(directory: str, **kwargs):
                     byte_backup = int(versions[idx])
                     archive_version_byte = filehandle.read(1)
                     if archive_names[idx] == f and archive_version_byte == version_byte_dict[byte_backup]:
-                        print(f"No change needed for {f}")
+                        print(f"{str(count+1): <5} {f: <50} - No change needed")
                     else:
                         if testing:
-                            print(f"File {f} header needs to be restored")
+                            print(f"{str(count+1): <5} {f: <50} - Header needs to be restored")
                         else:
                             filehandle.seek(4)
                             filehandle.write(version_byte_dict[byte_backup])
-                            print(f"Restored {f} header")
+                            print(f"{str(count+1): <5} {f: <50} - Header restored")
                         count_edited += 1
                     count += 1
         break
@@ -154,19 +154,40 @@ def restore_backup(directory: str, **kwargs):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         prog="Bethesda Archive(BA2) version switcher",
-        description="Switches Bethesda archive version between versions 1(Fallout 4, 76), 7(Fallout 4 NG), and 8(Fallout 4 NG)"
+        description="Switches Bethesda archive version between versions 1(Fallout 4, 76), 7(Fallout 4 NG), and 8(Fallout 4 NG)",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=textwrap.dedent('''\
+         Examples:
+             View (and save) archives and versions:
+                python -d "Fallout 4\\Data" --view
+                               
+             Set version of archives listed in input.csv(version column in input.csv is ignored) to version 1
+                python -d "Fallout 4\\Data" --change 1
+                               
+             Restore only Fallout 4 ba2 archive headers to original NG versions
+                python -d "Fallout 4\\Data" --restore
+                python -d "Fallout 4\\Data" --restore fallout
+                               
+             Dry run (Don't modify any files, just show changes) for any of the above commands: Add -t or --test
+                python -d "Fallout 4\\Data" --restore fallout --test
+                python -d "Fallout 4\\Data" --restore full --test
+                python -d "Fallout 4\\Data" --change 7 --test
+         ''')
     )
     cwd = os.getcwd()
     parser.add_argument("-d", "--directory",
                         type=str, action="store",
+                        metavar='path',
                         help="Working directory where the archives are (by default, it is the current working directory)", default=cwd)
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("-v", "--view", action="store_true", 
                         help="View all archive versions", default=None)
     group.add_argument("-c", "--change", action="store", 
-                        help="Change archive versions",type=check_version, default=None)
+                       metavar='(1|7|8)',
+                        help="Change archive versions. Possible versions are 1, 7, 8",type=check_version, default=None)
     group.add_argument("-r", "--restore", 
                         action="store", 
+                        metavar='fallout|full',
                         help="Restore archive versions. Restore options: fallout(default) or full", nargs='?', type=check_backup_options, const='fallout')
     parser.add_argument("-t", "--test",
                         action="store_true",
