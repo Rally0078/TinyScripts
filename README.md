@@ -10,3 +10,9 @@
 <p>Makes a CBZ file from the numbered images within the folder. Supports batch conversion into CBZ through file having list of folders</p>
 <h3>MinecraftBackup</h3>
 <p>Creates backup archive of a Minecraft server(any folder really), names them by date, and keeps the latest 3 backups. Requires 7zip</p>
+<h3>GPUSwitch</h3>
+<p>Activates and Deactivates dGPU in Windows using PowerShell scripts. Have to change the device ID to the correct ones on your system to make it work.</p>
+<h3>AHK</h3>
+<p>AutoHotKey v2 scripts for games.</p>
+<h3>BA2version</h3>
+<p>Switches Bethesda archive version between versions 1(Fallout 4, 76), 7(Fallout 4 NG), and 8(Fallout 4 NG). Use with caution and take backups of the files before using.</p>
