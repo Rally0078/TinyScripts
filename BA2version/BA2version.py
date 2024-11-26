@@ -159,19 +159,19 @@ if __name__ == '__main__':
         epilog=textwrap.dedent('''\
          Examples:
              View (and save) archives and versions:
-                python -d "Fallout 4\\Data" --view
+                python BA2version.py -d "Fallout 4\\Data" --view
                                
              Set version of archives listed in input.csv(version column in input.csv is ignored) to version 1
-                python -d "Fallout 4\\Data" --change 1
+                python BA2version.py -d "Fallout 4\\Data" --change 1
                                
              Restore only Fallout 4 ba2 archive headers to original NG versions
-                python -d "Fallout 4\\Data" --restore
-                python -d "Fallout 4\\Data" --restore fallout
+                python BA2version.py -d "Fallout 4\\Data" --restore
+                python BA2version.py -d "Fallout 4\\Data" --restore fallout
                                
              Dry run (Don't modify any files, just show changes) for any of the above commands: Add -t or --test
-                python -d "Fallout 4\\Data" --restore fallout --test
-                python -d "Fallout 4\\Data" --restore full --test
-                python -d "Fallout 4\\Data" --change 7 --test
+                python BA2version.py -d "Fallout 4\\Data" --restore fallout --test
+                python BA2version.py -d "Fallout 4\\Data" --restore full --test
+                python BA2version.py -d "Fallout 4\\Data" --change 7 --test
          ''')
     )
     cwd = os.getcwd()
